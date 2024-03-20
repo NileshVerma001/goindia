@@ -2,12 +2,12 @@
 import { DisscussionFourm } from "@/components/DisscussionFourm";
 import { MarketStories } from "@/components/MarketStories";
 import Sub from "@/components/Sub";
-import { UserLogo } from "@/components/UserLogo";
+import { UserHeader } from "@/components/UserHeader";
 import { useState } from "react";
 
 export default function Home() {
   const [selectedUserId, setSelectedUserId] = useState(0);
-  const onlinePeopleExclOurUser = [
+  const items = [
     { id: 1, name: "Disscussion Fourm" },
     { id: 2, name: "Market Stories" },
     { id: 3, name: "Sentiment" },
@@ -29,8 +29,8 @@ export default function Home() {
     <div className="flex h-screen">
       <div className={`bg-[#111827] w-1/3 flex flex-col ${isClosed ? 'hidden' : ''}`}>
         <div className="flex-grow">
-          <UserLogo />
-          {onlinePeopleExclOurUser.map((user) => (
+          <UserHeader />
+          {items.map((user) => (
             <Sub
               key={user.id}
               id={user.id}
@@ -56,7 +56,7 @@ export default function Home() {
             )}
             </div>
       <div className={`flex flex-col bg-white ${isClosed ? 'w-full' : 'w-2/3'} p-2`}>
-  {!selectedUserId && <div>wrong select</div>}
+  {!selectedUserId && <div>select</div>}
   {!!selectedUserId && (
     <div>
       {selectedUserId === 1 && <DisscussionFourm/>}
