@@ -1,10 +1,12 @@
 "use client"
+import { DisscussionFourm } from "@/components/DisscussionFourm";
+import { MarketStories } from "@/components/MarketStories";
 import Sub from "@/components/Sub";
 import { UserLogo } from "@/components/UserLogo";
 import { useState } from "react";
 
 export default function Home() {
-  const [selectedUserId, setSelectedUserId] = useState(-1);
+  const [selectedUserId, setSelectedUserId] = useState(0);
   const onlinePeopleExclOurUser = [
     { id: 1, name: "Disscussion Fourm" },
     { id: 2, name: "Market Stories" },
@@ -34,8 +36,22 @@ export default function Home() {
         </div>
       </div>
       <div className="bg-white w-2/3 flex flex-col">
-        ji
-      </div>
+  {!selectedUserId && <div>wrong select</div>}
+  {!!selectedUserId && (
+    <div>
+      {selectedUserId === 1 && <DisscussionFourm/>}
+      {selectedUserId === 2 && <MarketStories/>}
+      {selectedUserId === 3 && <span>III</span>}
+      {selectedUserId === 4 && <span>IV</span>}
+      {selectedUserId === 5 && <span>V</span>}
+      {selectedUserId === 6 && <span>VI</span>}
+      {selectedUserId === 7 && <span>VII</span>}
+      {selectedUserId === 8 && <span>VIII</span>}
+    </div>
+  )}
+</div>
+
+
     </div>
   );
 }
