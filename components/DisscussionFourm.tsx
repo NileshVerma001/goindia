@@ -19,7 +19,7 @@ export function DisscussionFourm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Discussion[]>("http://localhost:3000/api/disscussion");
+        const response = await axios.get<Discussion[]>("https://goindiaasignment.vercel.app/api/disscussion");
         setDiscussions(response.data);
       } catch (error) {
         console.log(error);
