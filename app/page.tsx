@@ -55,7 +55,7 @@ export default function Home() {
               </svg>
             )}
             </div>
-      <div className={`flex flex-col bg-white ${isClosed ? 'w-full' : 'w-2/3'} p-2`}>
+      <div className={`flex flex-col bg-white ${isClosed ? 'w-full' : 'w-2/3'} p-2 overflow-y-auto`}>
   {!selectedUserId && <div>select</div>}
   {!!selectedUserId && (
     <div>
