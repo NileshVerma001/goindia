@@ -1,26 +1,53 @@
+import { useEffect, useState } from "react";
 import { Market } from "./Market";
+import axios from "axios";
 
-export function MarketStories(){
+interface Marke {
+  id: number;
+  img: string;
+  title: string;
+  text: string;
+}
 
-    const stories = [
-        { id: 1, img: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3NrOTc5MS1pbWFnZS1rd3Z1amE5Ni5qcGc.jpg", title:"the cloud sunset ",text:"As the sun dipped below the horizon, its golden rays painted the clouds in a mesmerizing array of hues, casting a breathtaking sunset sky. The clouds, adorned with shades of pink, orange, and purple, created a picturesque scene that captivated all who beheld it."},
-        { id: 1, img: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3NrOTc5MS1pbWFnZS1rd3Z1amE5Ni5qcGc.jpg", title:"the cloud sunset ",text:"As the sun dipped below the horizon, its golden rays painted the clouds in a mesmerizing array of hues, casting a breathtaking sunset sky. The clouds, adorned with shades of pink, orange, and purple, created a picturesque scene that captivated all who beheld it."},
-        { id: 1, img: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3NrOTc5MS1pbWFnZS1rd3Z1amE5Ni5qcGc.jpg", title:"the cloud sunset ",text:"As the sun dipped below the horizon, its golden rays painted the clouds in a mesmerizing array of hues, casting a breathtaking sunset sky. The clouds, adorned with shades of pink, orange, and purple, created a picturesque scene that captivated all who beheld it."},
-        { id: 1, img: "https://images.rawpixel.com/image_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA1L3NrOTc5MS1pbWFnZS1rd3Z1amE5Ni5qcGc.jpg", title:"the cloud sunset ",text:"As the sun dipped below the horizon, its golden rays painted the clouds in a mesmerizing array of hues, casting a breathtaking sunset sky. The clouds, adorned with shades of pink, orange, and purple, created a picturesque scene that captivated all who beheld it."},
+export function MarketStories() {
+  const [stories, setStories] = useState<Marke[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-    ];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Marke[]>("http://localhost:3000/api/market");
+        setStories(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError("Error fetching data");
+        setLoading(false);
+      }
+    };
 
-    return(
-        <div className="grid grid-cols-1 gap-4">
-  {stories.map((user) => (
-    <div key={user.id} className="bg-gray-200 rounded-lg shadow-xl p-4 w-70">
-      <Market
-        img={user.img}
-        title={user.title}
-        text={user.text}
-      />
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  return (
+    <div className="grid grid-cols-1 gap-4">
+      {stories.map((story, index) => (
+        <div key={index} className="bg-gray-200 rounded-lg shadow-xl p-4 w-70">
+          <Market
+            img={story.img}
+            title={story.title}
+            text={story.text}
+          />
+        </div>
+      ))}
     </div>
-  ))}
-</div>
-    );
+  );
 }

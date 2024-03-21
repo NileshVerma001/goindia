@@ -1,32 +1,48 @@
+"use client"
+import { useState, useEffect } from "react";
 import Diss from "./Diss";
+import axios from "axios";
 
-export function DisscussionFourm(){
+interface Discussion {
+  id: number;
+  name: string;
+  mess: string;
+  address: string;
+  like: number;
+  views: number;
+  comments: number;
+}
 
-    const disscussions = [
-        { id: 1, name: "Nilesh Verma", mess:"The purple monkey danced gleefully under the twinkling rainbow as polka-dotted clouds floated by with giggling marshmallows",address:"Sector 62", like:25 ,views: 50, comments:35},
-        { id: 2, name: "Nilesh Verma", mess:"The purple monkey danced gleefully under the twinkling rainbow as polka-dotted clouds floated by with giggling marshmallows",address:"Sector 62", like:25 ,views: 50, comments:35},
-        { id: 3, name: "Nilesh Verma", mess:"The purple monkey danced gleefully under the twinkling rainbow as polka-dotted clouds floated by with giggling marshmallows",address:"Sector 62", like:25 ,views: 50, comments:35},
-        { id: 4, name: "Nilesh Verma", mess:"The purple monkey danced gleefully under the twinkling rainbow as polka-dotted clouds floated by with giggling marshmallows",address:"Sector 62", like:25 ,views: 50, comments:35},
-      ];
+export function DisscussionFourm() {
+  const [discussions, setDiscussions] = useState<Discussion[]>([]);
 
-    return(
-<div className="grid grid-cols-1 gap-4">
-  {disscussions.map((user) => (
-    <div key={user.id} className="bg-gray-200 rounded-lg shadow-xl p-4 w-70">
-      <Diss
-        name={user.name}
-        mess={user.mess}
-        add={user.address}
-        like={user.like}
-        views={user.views}
-        comments={user.comments}
-      />
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get<Discussion[]>("http://localhost:3000/api/disscussion");
+        setDiscussions(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div className="grid grid-cols-1 gap-4">
+      {discussions.map((discussion, index) => (
+        <div key={index} className="bg-gray-200 rounded-lg shadow-xl p-4 w-70">
+          <Diss
+            name={discussion.name}
+            mess={discussion.mess}
+            add={discussion.address}
+            like={discussion.like}
+            views={discussion.views}
+            comments={discussion.comments}
+          />
+        </div>
+      ))}
     </div>
-  ))}
-</div>
-
-
-      
-      
-    );
+  );
 }
