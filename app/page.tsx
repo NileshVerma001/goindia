@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <div className="flex h-screen">
-      <div className={`bg-[#111827] w-1/3 flex flex-col ${isClosed ? 'hidden' : ''}`}>
+      <div className={`bg-[#111827] w-1/3 flex flex-col max-w-[350px] ${isClosed ? 'hidden' : ''}`}>
         <div className="flex-grow">
           <UserHeader />
           {items.map((user) => (
