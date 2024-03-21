@@ -17,7 +17,7 @@ export function MarketStories() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<Marke[]>("http://localhost:3000/api/market");
+        const response = await axios.get<Marke[]>("https://goindiaasignment.vercel.app/api/market");
         setStories(response.data);
         setLoading(false);
       } catch (error) {
